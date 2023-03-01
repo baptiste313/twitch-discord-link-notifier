@@ -1,19 +1,8 @@
 {
-    // Twitch username of the bot account
     "username": "username",
-
-    // Twitch OAuth token for the bot account
     "password": "oauth:...",
-
-    // List of Twitch channels to listen to
     "channels": ["channel1", "channel2"],
-
-    // Discord webhook URL to post the links to
+    "ignoredUsers": ["user1", "user2"],
     "webhook": "https://discord.com/api/webhooks/...",
-
-    // Language of the messages sent to Discord
-    "lang": "en",
-
-    // List of usernames to ignore (case-sensitive)
-    "ignoredUsers": ["user1", "user2"]
+    "lang": "en"
 }
