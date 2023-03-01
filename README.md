@@ -2,11 +2,26 @@
 
 # Twitch Discord Link Notifier
 
+A Node.js application that listens for links in Twitch chat and sends them to a Discord channel.
+
 ## Getting Started
+
+1. Clone the repository and install dependencies using `npm i`.
+2. Prepare the necessary items before running the application:
+    - Twitch OAuth token (generated from https://twitchtokengenerator.com)
+    - Discord webhook URL
+3. Edit the `config.json` file to include your Twitch OAuth token, Discord webhook URL, and Twitch channel name to monitor.
 
 ### Prerequisites
 
+- Node.js (v15 or higher)
+- A Twitch account
+- A Discord account with a server and webhook set up
+
 ## Usage
+
+1. Start the application using `node index.js` or run it in the background using `screen -dm bash -c 'node index.js'`.
+2. Watch as links posted in your Twitch chat are automatically sent to your Discord channel!
 
 ## Acknowledgments
 
