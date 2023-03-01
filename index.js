@@ -6,10 +6,6 @@ const urlRegex = /(https?:\/\/[^\s]+)/g;
 
 const client = new tmi.Client({
     options: { debug: false },
-    identity: {
-        username: config.username,
-        password: config.password
-    },
     channels: config.channels
 });
 
@@ -42,7 +38,7 @@ client.on('message', (channel, tags, message, self) => {
             body: JSON.stringify({ content })
         })
         .then(response => {
-            console.log(`✅`);
+            console.log(`[✅] Message from user ${username} posted on Discord`);
         })
         .catch(error => console.error(error));
     }
