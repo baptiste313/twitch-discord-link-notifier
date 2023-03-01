@@ -1,6 +1,4 @@
 {
-    "username": "username",
-    "password": "oauth:...",
     "channels": ["channel1", "channel2"],
     "ignoredUsers": ["user1", "user2"],
     "webhook": "https://discord.com/api/webhooks/...",
