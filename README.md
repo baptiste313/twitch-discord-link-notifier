@@ -7,15 +7,12 @@ A Node.js application that listens for links in Twitch chat and sends them to a 
 ## Getting Started
 
 1. Clone the repository and install dependencies using `npm i`.
-2. Prepare the necessary items before running the application:
-    - Twitch OAuth token (generated from https://twitchtokengenerator.com)
-    - Discord webhook URL
-3. Edit the `config.json` file to include your Twitch OAuth token, Discord webhook URL, and Twitch channel name to monitor.
+2. Create a Discord webhook in `Server Settings > Integrations > Webhooks`
+3. Edit the `config.json` file to include the URL of your Discord webhook, and the name of the Twitch channel to monitor.
 
 ### Prerequisites
 
 - Node.js (v15 or higher)
-- A Twitch account
 - A Discord account with a server and webhook set up
 
 ## Usage
