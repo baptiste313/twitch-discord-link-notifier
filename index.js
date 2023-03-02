@@ -1,5 +1,5 @@
 const tmi = require('tmi.js');
-const fetch = require('node-fetch');
+const axios = require('axios').default;
 const config = require('./config.json');
 
 const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -25,8 +25,8 @@ client.on('message', (channel, tags, message, self) => {
         const twitchUrl = `https://www.twitch.tv/${username}`;
         const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        fetch(urls[0])
-            .then(response => response.text())
+        axios.get(urls[0])
+            .then(response => response.data)
             .then(text => {
                 const titleMatch = text.match(/<title>(.*?)<\/title>/);
                 const descriptionMatch = text.match(/<meta name="description" content="(.*?)"/);
@@ -65,13 +65,11 @@ client.on('message', (channel, tags, message, self) => {
                     embeds: [embed]
                 };
 
-                fetch(config.webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(webhookMessage)
-                })
+                axios.post(config.webhookUrl, webhookMessage, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
                     .then(response => {
                         console.log(`[✅] Message from user ${username} posted on Discord`);
                     })
