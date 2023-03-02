@@ -22,24 +22,61 @@ client.on('message', (channel, tags, message, self) => {
 
     if (urls) {
         const username = tags.username;
-        let content;
+        const twitchUrl = `https://www.twitch.tv/${username}`;
+        const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        if (config.lang === 'fr') {
-            content = `**${username}** a publié un lien:\n${urls.join('\n')}`;
-        } else {
-            content = `**${username}** posted a link:\n${urls.join('\n')}`;
-        }
+        fetch(urls[0])
+            .then(response => response.text())
+            .then(text => {
+                const titleMatch = text.match(/<title>(.*?)<\/title>/);
+                const descriptionMatch = text.match(/<meta name="description" content="(.*?)"/);
+                const imageUrlMatch = text.match(/<meta property="og:image" content="(.*?)"/);
+                let title = titleMatch ? Buffer.from(titleMatch[1], 'utf-8').toString() : "Unknown Title";
+                let description = descriptionMatch ? Buffer.from(descriptionMatch[1], 'utf-8').toString() : "No Description Available";
+                const imageUrl = imageUrlMatch ? imageUrlMatch[1] : null;
 
-        fetch(config.webhook, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content })
-        })
-        .then(response => {
-            console.log(`[✅] Message from user ${username} posted on Discord`);
-        })
-        .catch(error => console.error(error));
+                if (config.lang === "fr") {
+                    if (title === "Unknown Title") {
+                        title = "Titre inconnu";
+                    }
+                    if (description === "No Description Available") {
+                        description = "Pas de description disponible";
+                    }
+                }
+
+                const embed = {
+                    color: 0xff7b10,
+                    author: {
+                        name: username,
+                        url: twitchUrl
+                    },
+                    title: title,
+                    description: description,
+                    url: urls[0],
+                    image: {
+                        url: imageUrl
+                    },
+                    timestamp: date
+                };
+
+                const webhookMessage = {
+                    username: config.botUsername,
+                    avatar_url: config.botAvatarUrl,
+                    embeds: [embed]
+                };
+
+                fetch(config.webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(webhookMessage)
+                })
+                    .then(response => {
+                        console.log(`[✅] Message from user ${username} posted on Discord`);
+                    })
+                    .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
     }
 });
