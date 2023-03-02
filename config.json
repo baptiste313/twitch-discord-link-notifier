@@ -1,6 +1,9 @@
 {
+    "botUsername": "Twitch Discord Link Notifier",
+    "botAvatarUrl": "https://www.google.com/s2/favicons?domain=twitch.tv&sz=512",
     "channels": ["channel1", "channel2"],
-    "ignoredUsers": ["user1", "user2"],
-    "webhook": "https://discord.com/api/webhooks/...",
-    "lang": "en"
+    "ignoredUsers": ["user1", "user2"]
+    "lang": "en",
+    "suppressNotifications": false
+    "webhookUrl": "https://discord.com/api/webhooks/...",
 }
